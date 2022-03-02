@@ -73,6 +73,9 @@ You can see the file included with this repo and use it as a sample to understan
 
 6. You're done
 
+7. Side note: if you also want memtest86+ available, you should adjust the `/etc/grub.d/20_memtest86+` section of the grub.cfg file with the same principles (edit all the `set root` commands to point towards your tftp server) and copy over the memtest binaries as well.
+In this case, you will also need to edit your `Dockerfile` by uncommenting [line 30](https://github.com/matteoraf/dnsmasq-tftp-pxe/blob/main/Dockerfile#L30) or, even better, add `memtest*` in the existing [COPY command on line 29](https://github.com/matteoraf/dnsmasq-tftp-pxe/blob/main/Dockerfile#L29).
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
