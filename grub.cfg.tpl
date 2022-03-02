@@ -68,13 +68,8 @@ if [ x$feature_default_font_path = xy ] ; then
 else
 insmod part_gpt
 insmod zfs
-set root='hd0,gpt3'
-if [ x$feature_platform_search_hint = xy ]; then
-  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt3 --hint-efi=hd0,gpt3 --hint-baremetal=ahci0,gpt3  --hint-bios=hd1,gpt3 --hint-efi=hd1,gpt3 --hint-baremetal=ahci1,gpt3  --hint-bios=hd2,gpt3 --hint-efi=hd2,gpt3 --hint-baremetal=ahci2,gpt3  --hint-bios=hd3,gpt3 --hint-efi=hd3,gpt3 --hint-baremetal=ahci3,gpt3  --hint-bios=hd4,gpt3 --hint-efi=hd4,gpt3 --hint-baremetal=ahci4,gpt3  --hint-bios=hd5,gpt3 --hint-efi=hd5,gpt3 --hint-baremetal=ahci5,gpt3  dcfde8ffff8e0ebe
-else
-  search --no-floppy --fs-uuid --set=root dcfde8ffff8e0ebe
-fi
-    font="/ROOT/pve-1@/usr/share/grub/unicode.pf2"
+set root='tftp,${TFTP_HOST_IP}'
+    font="boot/grub/unicode.pf2"
 fi
 
 if loadfont $font ; then
@@ -111,10 +106,9 @@ function gfxmode {
 }
 set linux_gfx_mode=
 export linux_gfx_mode
-menuentry 'Proxmox VE GNU/Linux' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-dcfde8ffff8e0ebe' {
+menuentry 'Proxmox VE GNU/Linux' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple' {
 	load_video
 	insmod gzio
-	if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
 	insmod part_gpt
 	insmod zfs
 	set root='tftp,${TFTP_HOST_IP}'
@@ -124,10 +118,9 @@ menuentry 'Proxmox VE GNU/Linux' --class proxmox --class gnu-linux --class gnu -
 	initrd	boot/initrd.img-5.13.19-4-pve
 }
 submenu 'Advanced options for Proxmox VE GNU/Linux' $menuentry_id_option 'gnulinux-advanced-dcfde8ffff8e0ebe' {
-	menuentry 'Proxmox VE GNU/Linux, with Linux 5.13.19-4-pve' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-5.13.19-4-pve-advanced-dcfde8ffff8e0ebe' {
+	menuentry 'Proxmox VE GNU/Linux, with Linux 5.13.19-4-pve' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-5.13.19-4-pve-advanced' {
 		load_video
 		insmod gzio
-		if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
 		insmod part_gpt
 		insmod zfs
 		set root='tftp,${TFTP_HOST_IP}'
@@ -136,10 +129,9 @@ submenu 'Advanced options for Proxmox VE GNU/Linux' $menuentry_id_option 'gnulin
 		echo	'Loading initial ramdisk ...'
 		initrd	boot/initrd.img-5.13.19-4-pve
 	}
-	menuentry 'Proxmox VE GNU/Linux, with Linux 5.13.19-4-pve (recovery mode)' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-5.13.19-4-pve-recovery-dcfde8ffff8e0ebe' {
+	menuentry 'Proxmox VE GNU/Linux, with Linux 5.13.19-4-pve (recovery mode)' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-5.13.19-4-pve-recovery' {
 		load_video
 		insmod gzio
-		if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
 		insmod part_gpt
 		insmod zfs
 		set root='tftp,${TFTP_HOST_IP}'
@@ -148,10 +140,9 @@ submenu 'Advanced options for Proxmox VE GNU/Linux' $menuentry_id_option 'gnulin
 		echo	'Loading initial ramdisk ...'
 		initrd	boot/initrd.img-5.13.19-4-pve
 	}
-	menuentry 'Proxmox VE GNU/Linux, with Linux 5.13.19-2-pve' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-5.13.19-2-pve-advanced-dcfde8ffff8e0ebe' {
+	menuentry 'Proxmox VE GNU/Linux, with Linux 5.13.19-2-pve' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-5.13.19-2-pve-advanced' {
 		load_video
 		insmod gzio
-		if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
 		insmod part_gpt
 		insmod zfs
 		set root='tftp,${TFTP_HOST_IP}'
@@ -160,10 +151,9 @@ submenu 'Advanced options for Proxmox VE GNU/Linux' $menuentry_id_option 'gnulin
 		echo	'Loading initial ramdisk ...'
 		initrd	boot/initrd.img-5.13.19-2-pve
 	}
-	menuentry 'Proxmox VE GNU/Linux, with Linux 5.13.19-2-pve (recovery mode)' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-5.13.19-2-pve-recovery-dcfde8ffff8e0ebe' {
+	menuentry 'Proxmox VE GNU/Linux, with Linux 5.13.19-2-pve (recovery mode)' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-5.13.19-2-pve-recovery' {
 		load_video
 		insmod gzio
-		if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
 		insmod part_gpt
 		insmod zfs
 		set root='tftp,${TFTP_HOST_IP}'
@@ -184,45 +174,25 @@ submenu 'Advanced options for Proxmox VE GNU/Linux' $menuentry_id_option 'gnulin
 menuentry "Memory test (memtest86+)" {
 	insmod part_gpt
 	insmod zfs
-	set root='hd0,gpt3'
-	if [ x$feature_platform_search_hint = xy ]; then
-	  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt3 --hint-efi=hd0,gpt3 --hint-baremetal=ahci0,gpt3  --hint-bios=hd1,gpt3 --hint-efi=hd1,gpt3 --hint-baremetal=ahci1,gpt3  --hint-bios=hd2,gpt3 --hint-efi=hd2,gpt3 --hint-baremetal=ahci2,gpt3  --hint-bios=hd3,gpt3 --hint-efi=hd3,gpt3 --hint-baremetal=ahci3,gpt3  --hint-bios=hd4,gpt3 --hint-efi=hd4,gpt3 --hint-baremetal=ahci4,gpt3  --hint-bios=hd5,gpt3 --hint-efi=hd5,gpt3 --hint-baremetal=ahci5,gpt3  dcfde8ffff8e0ebe
-	else
-	  search --no-floppy --fs-uuid --set=root dcfde8ffff8e0ebe
-	fi
+	set root='tftp,${TFTP_HOST_IP}'
 	linux16	/ROOT/pve-1@/boot/memtest86+.bin
 }
 menuentry "Memory test (memtest86+, serial console 115200)" {
 	insmod part_gpt
 	insmod zfs
-	set root='hd0,gpt3'
-	if [ x$feature_platform_search_hint = xy ]; then
-	  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt3 --hint-efi=hd0,gpt3 --hint-baremetal=ahci0,gpt3  --hint-bios=hd1,gpt3 --hint-efi=hd1,gpt3 --hint-baremetal=ahci1,gpt3  --hint-bios=hd2,gpt3 --hint-efi=hd2,gpt3 --hint-baremetal=ahci2,gpt3  --hint-bios=hd3,gpt3 --hint-efi=hd3,gpt3 --hint-baremetal=ahci3,gpt3  --hint-bios=hd4,gpt3 --hint-efi=hd4,gpt3 --hint-baremetal=ahci4,gpt3  --hint-bios=hd5,gpt3 --hint-efi=hd5,gpt3 --hint-baremetal=ahci5,gpt3  dcfde8ffff8e0ebe
-	else
-	  search --no-floppy --fs-uuid --set=root dcfde8ffff8e0ebe
-	fi
+	set root='tftp,${TFTP_HOST_IP}'
 	linux16	/ROOT/pve-1@/boot/memtest86+.bin console=ttyS0,115200n8
 }
 menuentry "Memory test (memtest86+, experimental multiboot)" {
 	insmod part_gpt
 	insmod zfs
-	set root='hd0,gpt3'
-	if [ x$feature_platform_search_hint = xy ]; then
-	  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt3 --hint-efi=hd0,gpt3 --hint-baremetal=ahci0,gpt3  --hint-bios=hd1,gpt3 --hint-efi=hd1,gpt3 --hint-baremetal=ahci1,gpt3  --hint-bios=hd2,gpt3 --hint-efi=hd2,gpt3 --hint-baremetal=ahci2,gpt3  --hint-bios=hd3,gpt3 --hint-efi=hd3,gpt3 --hint-baremetal=ahci3,gpt3  --hint-bios=hd4,gpt3 --hint-efi=hd4,gpt3 --hint-baremetal=ahci4,gpt3  --hint-bios=hd5,gpt3 --hint-efi=hd5,gpt3 --hint-baremetal=ahci5,gpt3  dcfde8ffff8e0ebe
-	else
-	  search --no-floppy --fs-uuid --set=root dcfde8ffff8e0ebe
-	fi
+	set root='tftp,${TFTP_HOST_IP}'
 	multiboot	/ROOT/pve-1@/boot/memtest86+_multiboot.bin
 }
 menuentry "Memory test (memtest86+, serial console 115200, experimental multiboot)" {
 	insmod part_gpt
 	insmod zfs
-	set root='hd0,gpt3'
-	if [ x$feature_platform_search_hint = xy ]; then
-	  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt3 --hint-efi=hd0,gpt3 --hint-baremetal=ahci0,gpt3  --hint-bios=hd1,gpt3 --hint-efi=hd1,gpt3 --hint-baremetal=ahci1,gpt3  --hint-bios=hd2,gpt3 --hint-efi=hd2,gpt3 --hint-baremetal=ahci2,gpt3  --hint-bios=hd3,gpt3 --hint-efi=hd3,gpt3 --hint-baremetal=ahci3,gpt3  --hint-bios=hd4,gpt3 --hint-efi=hd4,gpt3 --hint-baremetal=ahci4,gpt3  --hint-bios=hd5,gpt3 --hint-efi=hd5,gpt3 --hint-baremetal=ahci5,gpt3  dcfde8ffff8e0ebe
-	else
-	  search --no-floppy --fs-uuid --set=root dcfde8ffff8e0ebe
-	fi
+	set root='tftp,${TFTP_HOST_IP}'
 	multiboot	/ROOT/pve-1@/boot/memtest86+_multiboot.bin console=ttyS0,115200n8
 }
 ### END /etc/grub.d/20_memtest86+ ###
