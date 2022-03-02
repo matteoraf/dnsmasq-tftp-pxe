@@ -175,25 +175,25 @@ menuentry "Memory test (memtest86+)" {
 	insmod part_gpt
 	insmod zfs
 	set root='tftp,${TFTP_HOST_IP}'
-	linux16	/ROOT/pve-1@/boot/memtest86+.bin
+	linux16	boot/memtest86+.bin
 }
 menuentry "Memory test (memtest86+, serial console 115200)" {
 	insmod part_gpt
 	insmod zfs
 	set root='tftp,${TFTP_HOST_IP}'
-	linux16	/ROOT/pve-1@/boot/memtest86+.bin console=ttyS0,115200n8
+	linux16	boot/memtest86+.bin console=ttyS0,115200n8
 }
 menuentry "Memory test (memtest86+, experimental multiboot)" {
 	insmod part_gpt
 	insmod zfs
 	set root='tftp,${TFTP_HOST_IP}'
-	multiboot	/ROOT/pve-1@/boot/memtest86+_multiboot.bin
+	multiboot	boot/memtest86+_multiboot.bin
 }
 menuentry "Memory test (memtest86+, serial console 115200, experimental multiboot)" {
 	insmod part_gpt
 	insmod zfs
 	set root='tftp,${TFTP_HOST_IP}'
-	multiboot	/ROOT/pve-1@/boot/memtest86+_multiboot.bin console=ttyS0,115200n8
+	multiboot	boot/memtest86+_multiboot.bin console=ttyS0,115200n8
 }
 ### END /etc/grub.d/20_memtest86+ ###
 
