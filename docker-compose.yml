@@ -1,0 +1,43 @@
+# file: docker-compose.yml
+# description: This file provides a docker container running docker-dnsmasq.
+
+version: '2.4'
+    
+networks:
+  srv_vlan:
+    driver: macvlan
+    driver_opts:
+      parent: "$HOST_PARENT_INTERFACE"
+    ipam:
+      config:
+        - subnet: "$TFTP_SUBNET"
+          gateway: "$TFTP_SUBNET_GATEWAY"
+
+#volumes:
+#  pxe:
+#    driver_opts:
+#      type: nfs
+#      o: addr=$NFS_ADDR,vers=$NFS_VERS
+#      device: :$NFS_TARGET
+
+
+services:
+  dnsmasq:
+    build:
+      context: .
+      args:
+        CONFIG_PATH: $CONFIG_PATH
+        TFTP_HOST_IP: $TFTP_HOST_IP
+        TFTP_NETWORK: $TFTP_NETWORK
+    env_file:
+      - .env
+    cap_add:
+      - 'NET_ADMIN'
+    ports:
+      - '67:67/udp'
+      - '68:68/udp'
+    networks:
+      srv_vlan:
+        ipv4_address: "$TFTP_HOST_IP"
+ #   volumes:
+ #     - 'pxe:$NFS_PATH'
