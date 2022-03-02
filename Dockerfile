@@ -5,7 +5,7 @@ ARG CONFIG_PATH
 ARG TFTP_HOST_IP
 ARG TFTP_NETWORK
 
-COPY dnsmasq.conf.tpl grub.cfg.tpl boot.cfg.tpl watcher.sh "$CONFIG_PATH"/
+COPY dnsmasq.conf.tpl grub.cfg.tpl boot.cfg.tpl "$CONFIG_PATH"/
 
 # Install and configure grub
 RUN \
