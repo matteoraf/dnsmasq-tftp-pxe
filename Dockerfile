@@ -13,7 +13,6 @@ RUN \
 	apt-get update && apt-get install -y \
     grub-pc-bin \
     dnsmasq \
-    inotify-tools \
     # Remove apt cache
 	&& rm -rf /var/lib/apt/lists/* \
 	# Replace variables in boot.cfg file
@@ -28,12 +27,10 @@ RUN \
 
 # Copy images to tftp dir
 COPY vmlinuz* initrd* /tftp/boot/
-
+#COPY memtest* /tftp/boot/
 
 #####
 EXPOSE 67/udp
 EXPOSE 68/udp
 
 ENTRYPOINT ["dnsmasq", "-k", "--log-facility=-"]
-#ENTRYPOINT ["entrypoint.sh"]
-#CMD ["-k", "--log-facility=-"]]
