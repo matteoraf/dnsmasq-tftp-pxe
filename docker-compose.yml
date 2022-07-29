@@ -13,14 +13,6 @@ networks:
         - subnet: "$TFTP_SUBNET"
           gateway: "$TFTP_SUBNET_GATEWAY"
 
-#volumes:
-#  pxe:
-#    driver_opts:
-#      type: nfs
-#      o: addr=$NFS_ADDR,vers=$NFS_VERS
-#      device: :$NFS_TARGET
-
-
 services:
   dnsmasq:
     build:
@@ -39,5 +31,4 @@ services:
     networks:
       srv_vlan:
         ipv4_address: "$TFTP_HOST_IP"
- #   volumes:
- #     - 'pxe:$NFS_PATH'
+    restart: on-failure
