@@ -93,6 +93,13 @@ else
     set timeout=5
   fi
 fi
+
+# Enable the lspci module to check if the server has a Radeon card installed
+insmod lspci
+
+if [[ lspci | grep -q 'Radeon' ]]; then
+   set default="Proxmox VE GNU/Linux IOMMU ON"
+fi
 ### END /etc/grub.d/00_header ###
 
 ### BEGIN /etc/grub.d/05_debian_theme ###
@@ -112,20 +119,43 @@ menuentry 'Proxmox VE GNU/Linux' --class proxmox --class gnu-linux --class gnu -
 	insmod part_gpt
 	insmod zfs
 	set root='tftp,${TFTP_HOST_IP}'
-	echo	'Loading Linux 5.13.19-4-pve ...'
-	linux	boot/vmlinuz-5.13.19-4-pve root=ZFS=rpool/ROOT/pve-1 ro  root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet
+	echo	'Loading Linux 5.13.19-6-pve ...'
+	linux	boot/vmlinuz-5.13.19-6-pve root=ZFS=rpool/ROOT/pve-1 ro  root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet intel_iommu=igfx_off intremap=off
 	echo	'Loading initial ramdisk ...'
-	initrd	boot/initrd.img-5.13.19-4-pve
+	initrd	boot/initrd.img-5.13.19-6-pve
 }
 submenu 'Advanced options for Proxmox VE GNU/Linux' $menuentry_id_option 'gnulinux-advanced-dcfde8ffff8e0ebe' {
-	menuentry 'Proxmox VE GNU/Linux, with Linux 5.13.19-4-pve' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-5.13.19-4-pve-advanced' {
+
+	menuentry 'Proxmox VE GNU/Linux, with Linux 5.13.19-6-pve' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-5.13.19-6-pve-advanced' {
+		load_video
+		insmod gzio
+		insmod part_gpt
+		insmod zfs
+		set root='tftp,${TFTP_HOST_IP}'
+		echo	'Loading Linux 5.13.19-6-pve ...'
+		linux	boot/vmlinuz-5.13.19-6-pve root=ZFS=rpool/ROOT/pve-1 ro  root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet intel_iommu=igfx_off intremap=off
+		echo	'Loading initial ramdisk ...'
+		initrd	boot/initrd.img-5.13.19-6-pve
+	}
+	menuentry 'Proxmox VE GNU/Linux, with Linux 5.13.19-6-pve (recovery mode)' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-5.13.19-6-pve-recovery' {
+		load_video
+		insmod gzio
+		insmod part_gpt
+		insmod zfs
+		set root='tftp,${TFTP_HOST_IP}'
+		echo	'Loading Linux 5.13.19-6-pve ...'
+		linux	boot/vmlinuz-5.13.19-6-pve root=ZFS=rpool/ROOT/pve-1 ro single  root=ZFS=rpool/ROOT/pve-1 boot=zfs
+		echo	'Loading initial ramdisk ...'
+		initrd	boot/initrd.img-5.13.19-6-pve
+	}
+    menuentry 'Proxmox VE GNU/Linux, with Linux 5.13.19-4-pve' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-5.13.19-4-pve-advanced' {
 		load_video
 		insmod gzio
 		insmod part_gpt
 		insmod zfs
 		set root='tftp,${TFTP_HOST_IP}'
 		echo	'Loading Linux 5.13.19-4-pve ...'
-		linux	boot/vmlinuz-5.13.19-4-pve root=ZFS=rpool/ROOT/pve-1 ro  root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet
+		linux	boot/vmlinuz-5.13.19-4-pve root=ZFS=rpool/ROOT/pve-1 ro  root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet intel_iommu=igfx_off intremap=off
 		echo	'Loading initial ramdisk ...'
 		initrd	boot/initrd.img-5.13.19-4-pve
 	}
@@ -147,7 +177,7 @@ submenu 'Advanced options for Proxmox VE GNU/Linux' $menuentry_id_option 'gnulin
 		insmod zfs
 		set root='tftp,${TFTP_HOST_IP}'
 		echo	'Loading Linux 5.13.19-2-pve ...'
-		linux	boot/vmlinuz-5.13.19-2-pve root=ZFS=rpool/ROOT/pve-1 ro  root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet
+		linux	boot/vmlinuz-5.13.19-2-pve root=ZFS=rpool/ROOT/pve-1 ro  root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet intel_iommu=igfx_off intremap=off
 		echo	'Loading initial ramdisk ...'
 		initrd	boot/initrd.img-5.13.19-2-pve
 	}
@@ -164,6 +194,17 @@ submenu 'Advanced options for Proxmox VE GNU/Linux' $menuentry_id_option 'gnulin
 	}
 }
 
+menuentry 'Proxmox VE GNU/Linux IOMMU ON' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple' {
+	load_video
+	insmod gzio
+	insmod part_gpt
+	insmod zfs
+	set root='tftp,${TFTP_HOST_IP}'
+	echo	'Loading Linux 5.13.19-6-pve ...'
+	linux	boot/vmlinuz-5.13.19-6-pve root=ZFS=rpool/ROOT/pve-1 ro  root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet intel_iommu=on iommu=pt
+	echo	'Loading initial ramdisk ...'
+	initrd	boot/initrd.img-5.13.19-6-pve-iommu
+}
 ### END /etc/grub.d/10_linux ###
 
 ### BEGIN /etc/grub.d/20_linux_xen ###
