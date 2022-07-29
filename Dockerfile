@@ -21,12 +21,12 @@ RUN \
     && grub-mknetdir --net-directory=/tftp --subdir=/boot/grub -d /usr/lib/grub/i386-pc \
     # Rebuild Grub core image with embedded config
     && grub-mkimage -O i386-pc-pxe -o /tftp/boot/grub/i386-pc/core.0 --config=$CONFIG_PATH/boot.cfg -p '(tftp,$TFTP_HOST_IP)/boot/grub' pxe tftp \
-    # Replace variables in dnsmasq and grub config giles
+    # Replace variables in dnsmasq and grub config files
     && sed -e "s/\${TFTP_NETWORK}/$TFTP_NETWORK/" -e "s/\${TFTP_HOST_IP}/$TFTP_HOST_IP/" "$CONFIG_PATH"/dnsmasq.conf.tpl > /etc/dnsmasq.conf \
     && sed -e "s/\${TFTP_HOST_IP}/$TFTP_HOST_IP/" "$CONFIG_PATH"/grub.cfg.tpl > /tftp/boot/grub/grub.cfg
 
 # Copy images to tftp dir
-COPY vmlinuz* initrd* /tftp/boot/
+COPY vmlinuz* initrd* memtest* /tftp/boot/
 #COPY memtest* /tftp/boot/
 
 #####
