@@ -126,52 +126,40 @@ function gfxmode {
 set linux_gfx_mode=
 export linux_gfx_mode
 
-menuentry 'Proxmox VE GNU/Linux' --class proxmox --class gnu-linux --class gnu --class os --id pve-default {
-	load_video
-	insmod gzio
-	insmod part_gpt
-	insmod zfs
-	set root='tftp,${TFTP_HOST_IP}'
-	echo	'Loading Linux 5.15.74-1-pve ...'
-	linux	boot/vmlinuz-5.15.74-1-pve root=ZFS=rpool/ROOT/pve-1 ro  root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet intel_iommu=igfx_off intremap=off
-	echo	'Loading initial ramdisk ...'
-	initrd	boot/initrd.img-5.15.74-1-pve
-}
-submenu 'Advanced options for Proxmox VE GNU/Linux' --id pve-recovery {
-	menuentry 'Proxmox VE GNU/Linux, with Linux 5.15.74-1-pve (recovery mode)' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-5.15.74-1-pve-recovery' {
-		load_video
-		insmod gzio
-		insmod part_gpt
-		insmod zfs
-		set root='tftp,${TFTP_HOST_IP}'
-		echo	'Loading Linux 5.15.74-1-pve ...'
-		linux	boot/vmlinuz-5.15.74-1-pve root=ZFS=rpool/ROOT/pve-1 ro single root=ZFS=rpool/ROOT/pve-1 boot=zfs
-		echo	'Loading initial ramdisk ...'
-		initrd	boot/initrd.img-5.15.74-1-pve
-	}
-	menuentry 'Proxmox VE GNU/Linux, with Linux 5.13.19-6-pve (recovery mode)' --class proxmox --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-5.13.19-6-pve-recovery' {
-		load_video
-		insmod gzio
-		insmod part_gpt
-		insmod zfs
-		set root='tftp,${TFTP_HOST_IP}'
-		echo	'Loading Linux 5.13.19-6-pve ...'
-		linux	boot/vmlinuz-5.13.19-6-pve root=ZFS=rpool/ROOT/pve-1 ro single  root=ZFS=rpool/ROOT/pve-1 boot=zfs
-		echo	'Loading initial ramdisk ...'
-		initrd	boot/initrd.img-5.13.19-6-pve
-	}
-}
-
 menuentry 'PVE Node 202' --class proxmox --class gnu-linux --class gnu --class os --id pve-202 {
 	load_video
 	insmod gzio
 	insmod part_gpt
 	insmod zfs
 	set root='tftp,${TFTP_HOST_IP}'
-	echo	'Loading Linux 5.15.74-1-pve for node 202 ...'
-	linux	boot/vmlinuz-5.15.74-1-pve-202 root=ZFS=rpool/ROOT/pve-1 ro  root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet intel_iommu=igfx_off intremap=off
+	echo	'Loading Linux 5.15.107-2-pve for node 202 ...'
+	linux	boot/vmlinuz-5.15.107-2-pve-202 root=ZFS=rpool/ROOT/pve-1 ro root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet intel_iommu=igfx_off intremap=off
 	echo	'Loading initial ramdisk for node 202 ...'
-	initrd	boot/initrd.img-5.15.74-1-pve-202
+	initrd	boot/initrd.img-5.15.107-2-pve-202
+}
+submenu 'Advanced options for PVE Node 202' --id pve-202-advanced {
+	menuentry 'PVE Node 202, with Linux 5.15.74-1-pve' --class proxmox --class gnu-linux --class gnu --class os --id pve-202-prev {
+		load_video
+		insmod gzio
+		insmod part_gpt
+		insmod zfs
+		set root='tftp,${TFTP_HOST_IP}'
+		echo	'Loading Linux 5.15.74-1-pve for node 202 ...'
+		linux	boot/vmlinuz-5.15.74-1-pve-202 root=ZFS=rpool/ROOT/pve-1 ro root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet intel_iommu=igfx_off intremap=off
+		echo	'Loading initial ramdisk for node 202 ...'
+		initrd	boot/initrd.img-5.15.74-1-pve-202
+	}
+	menuentry 'PVE Node 202, with Linux 5.15.74-1-pve (recovery mode)' --class proxmox --class gnu-linux --class gnu --class os --id pve-202-recovery {
+		load_video
+		insmod gzio
+		insmod part_gpt
+		insmod zfs
+		set root='tftp,${TFTP_HOST_IP}'
+		echo	'Loading Linux 5.15.107-2-pve for node 202 ...'
+		linux	boot/vmlinuz-5.15.107-2-pve-202 root=ZFS=rpool/ROOT/pve-1 ro single root=ZFS=rpool/ROOT/pve-1 boot=zfs
+		echo	'Loading initial ramdisk for node 202 ...'
+		initrd	boot/initrd.img-5.15.107-2-pve-202
+	}
 }
 
 menuentry 'PVE Node 203' --class proxmox --class gnu-linux --class gnu --class os --id pve-203 {
@@ -180,10 +168,34 @@ menuentry 'PVE Node 203' --class proxmox --class gnu-linux --class gnu --class o
 	insmod part_gpt
 	insmod zfs
 	set root='tftp,${TFTP_HOST_IP}'
-	echo	'Loading Linux 5.15.74-1-pve for node 203 ...'
-	linux	boot/vmlinuz-5.15.74-1-pve-203 root=ZFS=rpool/ROOT/pve-1 ro  root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet intel_iommu=igfx_off intremap=off
+	echo	'Loading Linux 5.15.107-2-pve for node 203 ...'
+	linux	boot/vmlinuz-5.15.107-2-pve-203 root=ZFS=rpool/ROOT/pve-1 ro  root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet intel_iommu=igfx_off intremap=off
 	echo	'Loading initial ramdisk for node 203 ...'
-	initrd	boot/initrd.img-5.15.74-1-pve-203
+	initrd	boot/initrd.img-5.15.107-2-pve-203
+}
+submenu 'Advanced options for PVE Node 203' --id pve-203-advanced {
+	menuentry 'PVE Node 203, with Linux 5.15.74-1-pve' --class proxmox --class gnu-linux --class gnu --class os --id pve-203-prev {
+		load_video
+		insmod gzio
+		insmod part_gpt
+		insmod zfs
+		set root='tftp,${TFTP_HOST_IP}'
+		echo	'Loading Linux 5.15.74-1-pve for node 203 ...'
+		linux	boot/vmlinuz-5.15.74-1-pve-203 root=ZFS=rpool/ROOT/pve-1 ro root=ZFS=rpool/ROOT/pve-1 boot=zfs quiet intel_iommu=igfx_off intremap=off
+		echo	'Loading initial ramdisk for node 203 ...'
+		initrd	boot/initrd.img-5.15.74-1-pve-203
+	}
+	menuentry 'PVE Node 203, with Linux 5.15.107-2-pve (recovery mode)' --class proxmox --class gnu-linux --class gnu --class os --id pve-203-recovery {
+		load_video
+		insmod gzio
+		insmod part_gpt
+		insmod zfs
+		set root='tftp,${TFTP_HOST_IP}'
+		echo	'Loading Linux 5.15.107-2-pve for node 203 ...'
+		linux	boot/vmlinuz-5.15.107-2-pve-203 root=ZFS=rpool/ROOT/pve-1 ro single root=ZFS=rpool/ROOT/pve-1 boot=zfs
+		echo	'Loading initial ramdisk for node 203 ...'
+		initrd	boot/initrd.img-5.15.107-2-pve-203
+	}
 }
 
 menuentry 'PVE Node 201 IOMMU ON' --class proxmox --class gnu-linux --class gnu --class os --id pve-201 {
